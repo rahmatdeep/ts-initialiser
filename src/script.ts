@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -127,5 +128,14 @@ const indexContent = 'console.log("Hello, TypeScript!");';
 console.log('Creating src directory and index.ts...');
 fs.mkdirSync(srcDir);
 fs.writeFileSync(indexFile, indexContent);
+
+const gitignoreContent = 'node_modules\ndist';
+const gitignoreFile = path.join(process.cwd(), '.gitignore');
+
+console.log('Creating .gitignore file...');
+fs.writeFileSync(gitignoreFile, gitignoreContent);
+
+console.log('Initializing Git repository...');
+execSync('git init', { cwd: process.cwd() });
 
 console.log('Setup complete.');
